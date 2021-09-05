@@ -40,7 +40,7 @@ widget_button:buttons(
    gears.table.join(
       awful.button({}, 1, nil,
          function()
-            awful.spawn("blueman-manager")
+            awful.spawn("blueman-tray")
          end
       )
    )
