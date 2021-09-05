@@ -10,7 +10,6 @@
 local gears = require("gears")
 local awful = require("awful")
 
-
 -- ===================================================================
 -- User Configuration
 -- ===================================================================
@@ -27,19 +26,19 @@ local theme_config_dir = gears.filesystem.get_configuration_dir() .. "/configura
 
 -- define default apps (global variable so other components can access it)
 apps = {
-   network_manager = "", -- recommended: nm-connection-editor
-   power_manager = "", -- recommended: xfce4-power-manager
-   terminal = "alacritty",
+   network_manager = "nm-connection-editor", -- recommended: nm-connection-editor
+   power_manager = "xfce-power-manager", -- recommended: xfce4-power-manager
+   terminal = "kitty",
    launcher = "rofi -normal-window -modi drun -show drun -theme " .. theme_config_dir .. "rofi.rasi",
    lock = "i3lock",
    screenshot = "scrot -e 'mv $f ~/Pictures/ 2>/dev/null'",
-   filebrowser = "nautilus"
+   filebrowser = "thunar"
 }
 
 -- define wireless and ethernet interface names for the network widget
 -- use `ip link` command to determine these
 network_interfaces = {
-   wlan = 'wlp1s0',
+   wlan = 'wlan0',
    lan = 'enp1s0'
 }
 
@@ -47,7 +46,8 @@ network_interfaces = {
 local run_on_start_up = {
    "picom --experimental-backends --config " .. theme_config_dir .. "picom.conf",
    "redshift",
-   "unclutter"
+   "blueman-tray",
+   "nm-applet"
 }
 
 
@@ -116,7 +116,6 @@ client.connect_signal("manage", function (c)
       awful.placement.no_offscreen(c)
    end
 end)
-
 
 -- ===================================================================
 -- Client Focusing
