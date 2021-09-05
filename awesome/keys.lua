@@ -419,7 +419,7 @@ keys.globalkeys = gears.table.join(
          awful.tag.incncol(-1, nil, true)
       end,
       {description = "decrease the number of columns", group = "layout"}
-   ),
+      ),
    awful.key({modkey, altkey}, "Up",
       function()
          awful.tag.incncol(1, nil, true)
@@ -485,6 +485,21 @@ keys.globalkeys = gears.table.join(
          end
       end,
       {description = "restore minimized", group = "client"}
+   ),
+
+   -- =========================================
+   -- Customs
+   -- =========================================
+   awful.key({modkey}, "s",
+      function()
+         local logout_popup = require("awesome-wm-widgets.logout-popup-widget.logout-popup")
+         logout_popup.launch({
+            bg_color = "#2d2d2d", accent_color = "#393939", text_color = '#ffffff', icon_size = 40, icon_margin = 16,
+            onlock = function () awful.spawn.with_shell('i3lock-fancy') end,
+            phrases = {'Go away.'}
+         })
+      end,
+      {description = "logout modal", group = "custom"}
    )
 )
 
@@ -592,6 +607,7 @@ for i = 1, 9 do
                local tag = client.focus.screen.tags[i]
                if tag then
                   client.focus:move_to_tag(tag)
+                  tag:view_only()
                end
             end
          end,
