@@ -46,7 +46,7 @@ network_interfaces = {
 local run_on_start_up = {
    "picom --experimental-backends --config " .. theme_config_dir .. "picom.conf",
    "redshift",
-   "blueman-tray",
+   "blueman-applet",
    "nm-applet"
 }
 
