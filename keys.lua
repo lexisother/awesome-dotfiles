@@ -517,6 +517,9 @@ keys.globalkeys = gears.table.join(
       {description = "logout modal", group = "custom"}
    ),
 
+   -- Move client to another screen
+   awful.key({modkey}, "o", awful.client.movetoscreen),
+
    -- Shift-Alt to change keyboard layout
    awful.key({modkey, "Shift"}, "Alt_L", function () keys.kbdcfg.switch_next() end),
    -- Alt-Shift to change keyboard layout
