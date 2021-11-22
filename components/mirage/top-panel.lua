@@ -13,7 +13,7 @@
 local awful = require("awful")
 local beautiful = require("beautiful")
 local wibox = require("wibox")
-local gears = require("gears")
+local keys = require("keys")
 
 local dpi = beautiful.xresources.apply_dpi
 
@@ -51,6 +51,7 @@ top_panel.create = function(s)
       {
          layout = wibox.layout.fixed.horizontal,
          wibox.layout.margin(wibox.widget.systray(), dpi(5), dpi(5), dpi(5), dpi(5)),
+         keys.kbdcfg.widget,
          require("widgets.bluetooth"),
          require("widgets.network")(),
          require("widgets.battery")

@@ -4,3 +4,6 @@
 [submodule "awesome/awesome-wm-widgets"]
 	path = awesome-wm-widgets
 	url = https://github.com/streetturtle/awesome-wm-widgets
+[submodule "keyboard_layout"]
+	path = keyboard_layout
+	url = https://github.com/echuraev/keyboard_layout

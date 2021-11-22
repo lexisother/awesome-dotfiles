@@ -15,6 +15,7 @@ local awful = require("awful")
 local gears = require("gears")
 local naughty = require("naughty")
 local beautiful = require("beautiful")
+local keyboard_layout = require("keyboard_layout")
 local dpi = beautiful.xresources.apply_dpi
 
 -- Define mod keys
@@ -124,6 +125,18 @@ keys.clientbuttons = gears.table.join(
    awful.button({modkey}, 3, awful.mouse.client.resize)
 )
 
+
+keys.kbdcfg = keyboard_layout.kbdcfg({cmd = "xkb-switch -n", type = "gui"})
+
+keys.kbdcfg.add_primary_layout("English", beautiful.en_layout, "us")
+keys.kbdcfg.add_primary_layout("Russian", beautiful.ru_layout, "ru")
+
+-- keys.kbdcfg.widget:buttons(
+--  awful.util.table.join(awful.button({ }, 1, function () keys.kbdcfg.switch_next() end),
+--                        awful.button({ }, 3, function () keys.kbdcfg.menu:toggle() end))
+-- )
+
+keys.kbdcfg.bind()
 
 -- ===================================================================
 -- Desktop Key bindings
@@ -490,6 +503,8 @@ keys.globalkeys = gears.table.join(
    -- =========================================
    -- Customs
    -- =========================================
+
+   -- Logout module
    awful.key({modkey}, "s",
       function()
          local logout_popup = require("awesome-wm-widgets.logout-popup-widget.logout-popup")
@@ -500,7 +515,12 @@ keys.globalkeys = gears.table.join(
          })
       end,
       {description = "logout modal", group = "custom"}
-   )
+   ),
+
+   -- Shift-Alt to change keyboard layout
+   awful.key({modkey, "Shift"}, "Alt_L", function () keys.kbdcfg.switch_next() end),
+   -- Alt-Shift to change keyboard layout
+   awful.key({modkey, "Mod1"}, "Shift_L", function () keys.kbdcfg.switch_next() end)
 )
 
 
