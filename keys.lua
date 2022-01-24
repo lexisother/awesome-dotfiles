@@ -170,13 +170,35 @@ keys.globalkeys = gears.table.join(
    -- Brightness
    awful.key({}, "XF86MonBrightnessUp",
       function()
-         awful.spawn("xbacklight -inc 10", false)
+         local cmd = [[bash -c "xrandr --verbose | grep 'Brightness' | awk '{print $2}'"]]
+         awful.spawn.with_line_callback(cmd, {
+               stdout = function(line)
+                  line = tonumber(line)
+                  naughty.notify({
+                     message = line + 0.1,
+                     title = line + 0.1,
+                     app_name = "yes",
+                  })
+                  awful.spawn("xrandr --output eDP-1 --brightness " .. line + 0.1)
+               end,
+            })
       end,
       {description = "+10%", group = "hotkeys"}
    ),
    awful.key({}, "XF86MonBrightnessDown",
       function()
-         awful.spawn("xbacklight -dec 10", false)
+         local cmd = [[bash -c "xrandr --verbose | grep 'Brightness' | awk '{print $2}'"]]
+         awful.spawn.with_line_callback(cmd, {
+               stdout = function(line)
+                  line = tonumber(line)
+                  awful.spawn("xrandr --output eDP-1 --brightness " .. line - 0.1)
+                  naughty.notify({
+                     message = line - 0.1,
+                     title = line - 0.1,
+                     app_name = "yes",
+                  })
+               end,
+            })
       end,
       {description = "-10%", group = "hotkeys"}
    ),
