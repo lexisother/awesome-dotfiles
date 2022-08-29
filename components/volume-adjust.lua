@@ -44,7 +44,7 @@ local volume_adjust = wibox({
    ontop = true
 })
 
-local volume_bar = wibox.widget{
+local volume_bar = wibox.widget {
    widget = wibox.widget.progressbar,
    shape = gears.shape.rounded_bar,
    color = "#efefef",
@@ -81,18 +81,40 @@ local hide_volume_adjust = gears.timer {
 -- show volume-adjust when "volume_change" signal is emitted
 awesome.connect_signal("volume_change",
    function()
-      -- set new volume value
+      local function isempty(s)
+         return s == nil or s == ''
+      end
+
       awful.spawn.easy_async_with_shell(
          "amixer sget Master | grep 'Right:' | awk -F '[][]' '{print $2}'| sed 's/[^0-9]//g'",
          function(stdout)
-            local volume_level = tonumber(stdout)
-            volume_bar.value = volume_level
-            if (volume_level > 40) then
-               volume_icon:set_image(icon_dir .. "volume.png")
-            elseif (volume_level > 0) then
-               volume_icon:set_image(icon_dir .. "volume-low.png")
-            else
-               volume_icon:set_image(icon_dir .. "volume-off.png")
+            if not isempty(stdout) then
+               local volume_level = tonumber(stdout)
+               volume_bar.value = volume_level
+               if (volume_level > 40) then
+                  volume_icon:set_image(icon_dir .. "volume.png")
+               elseif (volume_level > 0) then
+                  volume_icon:set_image(icon_dir .. "volume-low.png")
+               else
+                  volume_icon:set_image(icon_dir .. "volume-off.png")
+               end
+            end
+         end,
+         false
+      )
+      awful.spawn.easy_async_with_shell(
+         "amixer sget Master | grep 'Mono:' | awk -F '[][]' '{print $2}' | sed 's/[^0-9]//g'",
+         function(stdout)
+            if not isempty(stdout) then
+               local volume_level = tonumber(stdout)
+               volume_bar.value = volume_level
+               if (volume_level > 40) then
+                  volume_icon:set_image(icon_dir .. "volume.png")
+               elseif (volume_level > 0) then
+                  volume_icon:set_image(icon_dir .. "volume-low.png")
+               else
+                  volume_icon:set_image(icon_dir .. "volume-off.png")
+               end
             end
          end,
          false
