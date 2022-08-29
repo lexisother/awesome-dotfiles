@@ -7,3 +7,6 @@
 [submodule "keyboard_layout"]
 	path = keyboard_layout
 	url = https://github.com/echuraev/keyboard_layout
+[submodule "net_widgets"]
+	path = net_widgets
+	url = https://github.com/pltanton/net_widgets
