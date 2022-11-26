@@ -17,10 +17,10 @@ local gears = require("gears")
 local dpi = beautiful.xresources.apply_dpi
 
 -- import widgets
-local task_list = require("widgets.task-list")
-local github_activity_widget  = require("awesome-wm-widgets.github-activity-widget.github-activity-widget")
-local logout_popup = require("awesome-wm-widgets.logout-popup-widget.logout-popup")
-local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
+local task_list              = require("widgets.task-list")
+local github_activity_widget = require("awesome-wm-widgets.github-activity-widget.github-activity-widget")
+local logout_popup           = require("awesome-wm-widgets.logout-popup-widget.logout-popup")
+local cpu_widget             = require("awesome-wm-widgets.cpu-widget.cpu-widget")
 
 -- define module table
 local top_panel = {}
@@ -47,19 +47,20 @@ top_panel.create = function(s)
       require("widgets.calendar").create(s),
       {
          layout = wibox.layout.fixed.horizontal,
+         wibox.layout.margin(require("widgets.player"), dpi(5), dpi(5)),
          wibox.layout.margin(wibox.widget.systray(), dpi(5), dpi(5), dpi(5), dpi(5)),
          require("widgets.bluetooth"),
          require("widgets.network")(),
          require("widgets.battery"),
-         github_activity_widget{
+         github_activity_widget {
             username = 'lexisother'
          },
-         logout_popup.widget{
+         logout_popup.widget {
             bg_color = "#2d2d2d", accent_color = "#393939", text_color = '#ffffff', icon_size = 40, icon_margin = 16,
-            onlock = function () awful.spawn.with_shell('i3lock-fancy') end,
-            phrases = {'Go away.'}
+            onlock = function() awful.spawn.with_shell('i3lock-fancy') end,
+            phrases = { 'Go away.' }
          },
-         cpu_widget{
+         cpu_widget {
             width = 70,
             step_width = 2,
             step_spacing = 0,
